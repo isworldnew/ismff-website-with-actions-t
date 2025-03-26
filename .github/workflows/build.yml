@@ -1,0 +1,39 @@
+name: Build React Application Pipeline
+
+# Триггер для запуска пайплайна
+# Пока указываю базовую ветку - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Определение среды выполнения
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Шаг 1: Checkout кода из репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Шаг 2: Установка Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 
+
+      # Шаг 3: Установка зависимостей
+      - name: Install dependencies
+        run: npm install
+
+      # Шаг 4: Сборка приложения
+      - name: Build the application
+        run: npm run build
+
+      # (Опционально) Шаг 5: Проверка наличия собранного приложения
+      - name: Verify build availability
+        run: ls dist # Проверяем, что директория dist существует после сборки
