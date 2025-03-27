@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow-dispatch: # без сложной логики можно оставить пустым
+  workflow_dispatch: # без сложной логики можно оставить пустым
 
 # Определение среды выполнения
 jobs:
