@@ -1,4 +1,4 @@
-name: Build React Application Pipeline
+name: Build React Application Pipeline And GitHub Pages Deploy
 
 # Триггер для запуска пайплайна
 # Пока указываю базовую ветку - main
@@ -12,7 +12,7 @@ on:
 
 # Определение среды выполнения
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,6 +34,13 @@ jobs:
       - name: Build the application
         run: npm run build
 
-      # (Опционально) Шаг 5: Проверка наличия собранного приложения
+      # Шаг 5: Проверка наличия собранного приложения
       - name: Verify build availability
         run: ls dist # Проверяем, что директория dist существует после сборки
+
+      # Шаг 6: Развёртывание на GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
